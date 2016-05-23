@@ -1,0 +1,23 @@
+make.x: MakeTree.o Reader.o DepGraph.o GraphNode.o TreeNode.o soln_main.o systemInterface.o
+	g++ -ggdb -std=c++11 MakeTree.o Reader.o DepGraph.o GraphNode.o TreeNode.o soln_main.o systemInterface.o -o make.x
+
+MakeTree.o: MakeTree.cpp MakeTree.hpp TreeNode.hpp GraphNode.hpp TreeNode.hpp
+	g++ -ggdb -std=c++11 MakeTree.cpp -o MakeTree.o -c
+
+Reader.o: Reader.cpp Reader.hpp Token.hpp
+	g++ -ggdb -std=c++11 Reader.cpp -o Reader.o -c
+
+DepGraph.o: DepGraph.cpp DepGraph.hpp TreeNode.hpp systemInterface.hpp 
+	g++ -ggdb -std=c++11 DepGraph.cpp -o DepGraph.o -c
+
+GraphNode.o: GraphNode.cpp GraphNode.hpp Token.hpp Reader.hpp TreeNode.o
+	g++ -ggdb -std=c++11 GraphNode.cpp -o GraphNode.o -c
+
+TreeNode.o: TreeNode.cpp TreeNode.hpp GraphNode.hpp DepGraph.hpp GraphNode.o
+	g++ -ggdb -std=c++11  TreeNode.cpp -o TreeNode.o -c
+
+soln_main.o: soln_main.cpp DepGraph.hpp
+	g++ -ggdb -std=c++11  soln_main.cpp -o soln_main.o -c
+
+systemInterface.o: systemInterface.hpp systemInterface.cpp
+	g++ -c -std=c++11  systemInterface.cpp -o systemInterface.o
